@@ -1,0 +1,113 @@
+------------------------------------------------------------
+-- PROCEDURE SYNTAX
+------------------------------------------------------------
+CREATE OR REPLACE PROCEDURE procedure_name
+(
+   parameter1 [IN | OUT | IN OUT] datatype,
+   parameter2 [IN | OUT | IN OUT] datatype
+)
+IS   -- or AS
+   -- local declarations
+BEGIN
+   -- statements
+EXCEPTION
+   -- exception handlers
+END procedure_name;
+/
+------------------------------------------------------------
+
+
+
+------------------------------------------------------------
+-- FUNCTION SYNTAX
+------------------------------------------------------------
+CREATE OR REPLACE FUNCTION function_name
+(
+   parameter1 [IN | OUT | IN OUT] datatype,
+   parameter2 [IN | OUT | IN OUT] datatype
+)
+RETURN return_datatype
+IS   -- or AS
+   -- local declarations
+BEGIN
+   -- statements
+   RETURN value;
+EXCEPTION
+   -- exception handlers
+END function_name;
+/
+------------------------------------------------------------
+
+
+
+------------------------------------------------------------
+-- PACKAGE SPECIFICATION SYNTAX
+------------------------------------------------------------
+CREATE OR REPLACE PACKAGE package_name IS
+   -- public type/variable declarations
+   PROCEDURE procedure_name(parameters);
+   FUNCTION function_name(parameters) RETURN datatype;
+END package_name;
+/
+------------------------------------------------------------
+
+
+
+------------------------------------------------------------
+-- PACKAGE BODY SYNTAX
+------------------------------------------------------------
+CREATE OR REPLACE PACKAGE BODY package_name IS
+
+   PROCEDURE procedure_name(parameters) IS
+   BEGIN
+      -- code
+   END procedure_name;
+
+   FUNCTION function_name(parameters) RETURN datatype IS
+   BEGIN
+      -- code
+      RETURN value;
+   END function_name;
+
+END package_name;
+/
+------------------------------------------------------------
+
+
+
+------------------------------------------------------------
+-- SEQUENCE SYNTAX
+------------------------------------------------------------
+CREATE SEQUENCE sequence_name
+   START WITH n
+   INCREMENT BY n
+   MINVALUE n
+   MAXVALUE n
+   NOCYCLE
+   CACHE n;
+------------------------------------------------------------
+
+
+
+------------------------------------------------------------
+-- CLUSTER SYNTAX
+------------------------------------------------------------
+-- Create cluster
+CREATE CLUSTER cluster_name
+(
+   column_name datatype,
+   column_name datatype
+)
+SIZE n;
+
+-- Create cluster index
+CREATE INDEX index_name
+   ON CLUSTER cluster_name;
+
+-- Create table inside cluster
+CREATE TABLE table_name
+(
+   column definitions...
+)
+CLUSTER cluster_name (cluster_key_column);
+------------------------------------------------------------

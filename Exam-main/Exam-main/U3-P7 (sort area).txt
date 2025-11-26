@@ -1,0 +1,7 @@
+SQL> SELECT
+  2      name,
+  3      value
+  4  FROM
+  5      v$sysstat
+  6  WHERE
+  7      name LIKE 'workarea exec%';

@@ -1,0 +1,5 @@
+ select name,gets,misses,
+       round((misses/DECODE(gets,0,1,gets)) * 100, 2) as mis_pct,
+        round(((gets-misses)/DECODE(gets,0,1,gets)) * 100, 2) as hit_rto
+        from v$latch
+    where name in ('redo copy','redo allocation','cache buffers lru chain','library cache load lock');

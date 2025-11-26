@@ -1,0 +1,53 @@
+CREATE TABLE collage (
+    collage_id   NUMBER,
+    collage_name VARCHAR2(50),
+    student      VARCHAR2(50)
+)
+STORAGE (initial 2k next 5k minextents 1 maxextents 5);
+/
+
+CREATE SEQUENCE collage_seq
+START WITH 1
+INCREMENT BY 1;
+/
+
+CREATE OR REPLACE PROCEDURE insert_collage AS
+BEGIN
+    INSERT INTO collage (collage_id, collage_name, student)
+    VALUES (collage_seq.NEXTVAL, 'Collage A', 'Laxman');
+    COMMIT;
+END;
+/
+
+DECLARE
+    job_no NUMBER;
+BEGIN
+    DBMS_JOB.SUBMIT(
+        job       => job_no,
+        what      => 'BEGIN insert_collage; END;',
+        next_date => SYSDATE,
+        interval  => NULL   
+    );
+    COMMIT;
+    DBMS_OUTPUT.PUT_LINE('Job created with JOB ID: ' || job_no);
+END;
+/
+
+for every day
+DECLARE
+    job_no NUMBER;
+BEGIN
+    DBMS_JOB.SUBMIT(
+        job       => job_no,
+        what      => 'BEGIN insert_collage; END;',
+        next_date => SYSDATE,
+        interval  => 'SYSDATE + 1'   -- run every day
+    );
+
+    COMMIT;
+
+    DBMS_OUTPUT.PUT_LINE('Job created with JOB ID: ' || job_no);
+END;
+/
+
+-----------------------------------------------------------------

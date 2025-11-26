@@ -1,0 +1,6 @@
+CREATE OR REPLACE PACKAGE myPackage AS
+  PROCEDURE show_Package;
+END ;
+/
+
+exec myPackage.show_Package;

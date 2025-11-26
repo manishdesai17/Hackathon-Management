@@ -1,0 +1,3 @@
+ - explain plan for select *from buyer;
+
+ - select *from table(DBMS_XPLAN.DISPLAY()); 

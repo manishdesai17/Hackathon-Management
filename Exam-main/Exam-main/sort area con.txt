@@ -1,0 +1,14 @@
+				SORT AREA CONTATTION
+	
+SELECT
+        MEM.VALUE AS sorts_in_memory,
+       DISK.VALUE AS sorts_on_disk,
+       ROUND(
+           (MEM.VALUE / (MEM.VALUE + DISK.VALUE)) * 100,
+           2
+       ) AS sort_hit_ratio_percent
+   FROM
+       (SELECT VALUE FROM v$sysstat WHERE name = 'sorts (memory)') MEM,
+      (SELECT VALUE FROM v$sysstat WHERE name = 'sorts (disk)') DISK;
+
+ALTER SYSTEM SET SORT_AREA_SIZE = 10M;

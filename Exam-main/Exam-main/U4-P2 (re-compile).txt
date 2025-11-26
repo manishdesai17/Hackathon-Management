@@ -1,0 +1,20 @@
+DECLARE
+  	v_user VARCHAR2(30);
+BEGIN
+    SELECT USER INTO v_user FROM dual;
+   
+   FOR rec IN (
+      SELECT OBJECT_NAME , OBJECT_TYPE
+      FROM user_objects
+      WHERE OBJECT_TYPE IN('PACKAGE','PACKAGE BODY','PROCEDURE')
+      
+      
+    )LOOP
+      DBMS_OUTPUT.PUT_LINE('Recompilling : ' || rec.OBJECT_TYPE || ' ' || rec.OBJECT_NAME);
+      DBMS_DDL.alter_compile(rec.object_type,v_user,rec.object_name);
+   END LOOP;
+   END;
+   /
+
+
+

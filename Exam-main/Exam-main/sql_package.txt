@@ -1,0 +1,24 @@
+SET SERVEROUTPUT ON;
+
+DECLARE
+    v_cursor_id   NUMBER;         
+    v_query       VARCHAR2(200);  
+    v_status      NUMBER;         
+BEGIN
+    v_query := 'UPDATE student SET city = :new_city WHERE city = :old_city';
+
+    v_cursor_id := DBMS_SQL.OPEN_CURSOR;
+
+    DBMS_SQL.PARSE(v_cursor_id, v_query, DBMS_SQL.NATIVE);
+
+    DBMS_SQL.BIND_VARIABLE(v_cursor_id, ':new_city', 'Patan');
+    DBMS_SQL.BIND_VARIABLE(v_cursor_id, ':old_city', 'abad');
+
+    v_status := DBMS_SQL.EXECUTE(v_cursor_id);
+
+    DBMS_OUTPUT.PUT_LINE('Rows updated: ' || v_status);
+
+    DBMS_SQL.CLOSE_CURSOR(v_cursor_id);
+
+END;
+/

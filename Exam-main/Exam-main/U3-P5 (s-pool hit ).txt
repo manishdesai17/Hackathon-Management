@@ -1,0 +1,17 @@
+Shared pool
+ - select
+    ROUND((1-(SUM(reloads)/SUM(pins)))*100,2) AS sharedpl_ht_rto
+    from
+    v$librarycache;
+
+Redo log buffer
+ -
+ SELECT
+        ROUND(
+            (1 - (SUM(DECODE(name,'redo buffer allocation retries',value,0)) /
+                   SUM(DECODE(name,'redo entries',value,0))
+                  )) * 100, 2
+       ) AS redo_log_hit_ratio
+    FROM v$sysstat
+    WHERE name IN ('redo buffer allocation retries','redo entries');
+

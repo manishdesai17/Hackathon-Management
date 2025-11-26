@@ -1,0 +1,25 @@
+DECLARE
+  	v_user VARCHAR2(30);
+BEGIN
+    SELECT USER INTO v_user FROM dual;
+    
+     FOR rec IN (SELECT OBJECT_NAME , OBJECT_TYPE
+      FROM user_objects
+      WHERE OBJECT_TYPE IN('INDEX','TABLE')
+)LOOP
+
+DBMS_OUTPUT.PUT_LINE('Analyzing : ' || rec.OBJECT_TYPE || ' ' || rec.OBJECT_NAME);
+
+DBMS_DDL.analyze_object(rec.OBJECT_TYPE,v_user,rec.OBJECT_NAME,'COMPUTE');
+       
+    END LOOP;
+
+FOR rec IN (
+   SELECT CLUSTER_NAME FROM USER_CLUSTERS
+)LOOP
+ DBMS_OUTPUT.PUT_LINE('Analyzing CLUSTER: ' || rec.cluster_name);
+DBMS_DDL.analyze_object('CLUSTER',v_user, rec.cluster_name,'COMPUTE');
+END LOOP;
+
+   END;
+   /
